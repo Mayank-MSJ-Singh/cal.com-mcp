@@ -20,7 +20,7 @@ def cal_get_all_schedules():
     }
 
     response = requests.request("GET", url, headers=headers)
-    return(response.text)
+    return response.text
 
 
 def cal_create_a_schedule(name, timeZone, isDefault, availability=None, overrides=None, **extra_fields):
@@ -65,7 +65,7 @@ def cal_get_default_schedule():
 
     response = requests.request("GET", url_new, headers=headers)
 
-    return (response.text)
+    return response.text
 
 def cal_get_schedule(schedule_id):
     url_new = url + schedule_id
@@ -77,7 +77,19 @@ def cal_get_schedule(schedule_id):
 
     response = requests.request("GET", url_new, headers=headers)
 
-    return (response.text)
+    return response.text
+
+def cal_delete_a_schedule(schedule_id):
+    url_new = url + schedule_id
+
+    headers = {
+        "Authorization": auth,
+        "cal-api-version": cal_api_version
+    }
+
+    response = requests.request("DELETE", url_new, headers=headers)
+
+    return response.text
 
 if __name__ == "__main__":
     #print(cal_get_all_schedules())
