@@ -67,7 +67,17 @@ def cal_get_default_schedule():
 
     return (response.text)
 
+def cal_get_schedule(schedule_id):
+    url_new = url + schedule_id
 
+    headers = {
+        "Authorization": auth,
+        "cal-api-version": cal_api_version
+    }
+
+    response = requests.request("GET", url_new, headers=headers)
+
+    return (response.text)
 
 if __name__ == "__main__":
     #print(cal_get_all_schedules())
