@@ -11,13 +11,15 @@ url = "https://api.cal.com/v2/schedules/"
 auth = os.getenv("CAL_COM_API_KEY")
 cal_api_version = os.getenv("CAL_API_VERSION")
 
-
-
-def cal_get_all_schedules():
-    headers = {
+headers = {
         "Authorization": auth,
         "cal-api-version": cal_api_version
     }
+
+
+
+def cal_get_all_schedules():
+    
 
     response = requests.request("GET", url, headers=headers)
     return response.text
@@ -58,11 +60,6 @@ def cal_create_a_schedule(name, timeZone, isDefault, availability=None, override
 
 def cal_get_default_schedule():
     url_new = url + "default"
-    headers = {
-        "Authorization": auth,
-        "cal-api-version": cal_api_version
-    }
-
     response = requests.request("GET", url_new, headers=headers)
 
     return response.text
@@ -70,23 +67,12 @@ def cal_get_default_schedule():
 def cal_get_schedule(schedule_id):
     url_new = url + schedule_id
 
-    headers = {
-        "Authorization": auth,
-        "cal-api-version": cal_api_version
-    }
-
     response = requests.request("GET", url_new, headers=headers)
 
     return response.text
 
 def cal_delete_a_schedule(schedule_id):
     url_new = url + schedule_id
-
-    headers = {
-        "Authorization": auth,
-        "cal-api-version": cal_api_version
-    }
-
     response = requests.request("DELETE", url_new, headers=headers)
 
     return response.text
