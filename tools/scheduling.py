@@ -56,6 +56,19 @@ def cal_create_a_schedule(name, timeZone, isDefault, availability=None, override
 
     return response.text
 
+def cal_get_default_schedule():
+    url_new = url + "default"
+    headers = {
+        "Authorization": auth,
+        "cal-api-version": cal_api_version
+    }
+
+    response = requests.request("GET", url_new, headers=headers)
+
+    return (response.text)
+
+
+
 if __name__ == "__main__":
     #print(cal_get_all_schedules())
 
