@@ -88,7 +88,7 @@ def cal_update_a_schedule(schedule_id, name=None, timeZone=None, isDefault=None,
     if not schedule_id:
         print("Missing required: schedule_id")
         return None
-    url_new = url + schedule_id
+    url_new = url + str(schedule_id)
 
     payload = {}
 
@@ -132,14 +132,14 @@ def cal_get_default_schedule():
     return response.text
 
 def cal_get_schedule(schedule_id):
-    url_new = url + schedule_id
+    url_new = url + str(schedule_id)
 
     response = requests.request("GET", url_new, headers=headers)
 
     return response.text
 
 def cal_delete_a_schedule(schedule_id):
-    url_new = url + schedule_id
+    url_new = url + str(schedule_id)
     response = requests.request("DELETE", url_new, headers=headers)
 
     return response.text

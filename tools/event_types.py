@@ -24,13 +24,13 @@ def get_all_event_types():
     print(response.text)
 
 def cal_get_event_type(eventTypeId):
-    url_new = url + eventTypeId
+    url_new = url + str(eventTypeId)
     response = requests.request("GET", url_new, headers=headers)
 
     return response.text
 
 def cal_delete_event_type(eventTypeId):
-    url_new = url + eventTypeId
+    url_new = url + str(eventTypeId)
     response = requests.request("DELETE", url_new, headers=headers)
     return response.text
 
