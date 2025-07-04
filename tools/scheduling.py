@@ -13,7 +13,7 @@ cal_api_version = os.getenv("CAL_API_VERSION")
 
 headers = {
         "Authorization": auth,
-        "cal-api-version": cal_api_version
+        "cal-api-version": "2024-06-11"
     }
 
 
