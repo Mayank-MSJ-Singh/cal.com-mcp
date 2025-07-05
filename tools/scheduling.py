@@ -33,8 +33,12 @@ def cal_create_a_schedule(name, timeZone, isDefault, availability=None, override
     name (str): Schedule name
     time_zone (str): Time zone (e.g., "America/New_York")
     is_default (bool): True if this is the default schedule
-    availability (list): Optional, Each object contains days and times when the user is available. If not passed, the default availability is Monday to Friday from 09:00 to 17:00.(each must have days, start_time, end_time + can have some extra random field)
-    overrides (list): Optional,  Need to change availability for a specific date? Add an override.(each must have days, start_time, end_time + can have some extra random field)
+    availability (list): Optional, Each object contains days and times when the user is available.
+                        If not passed, the default availability is Monday to Friday from 09:00 to 17:00.
+                        (each must have days, start_time, end_time + can have some extra random field)
+    overrides (list): Optional,  Need to change availability for a specific date?
+                    Add an override.(each must have days, start_time, end_time
+                    + can have some extra random field)
 
     Returns:
     dict: Ready-to-use schedule configuration
@@ -70,7 +74,15 @@ def cal_create_a_schedule(name, timeZone, isDefault, availability=None, override
 
     return response.text
 
-def cal_update_a_schedule(schedule_id, name=None, timeZone=None, isDefault=None, availability=None, overrides=None):
+def cal_update_a_schedule(
+    schedule_id,
+    name=None,
+    timeZone=None,
+    isDefault=None,
+    availability=None,
+    overrides=None
+):
+
     """
     Updates a schedule configuration in a simple way.
 
