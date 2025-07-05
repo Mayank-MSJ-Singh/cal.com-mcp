@@ -35,7 +35,7 @@ def cal_delete_event_type(eventTypeId):
     return response.text
 
 
-def create_event_type(
+def cal_create_event_type(
         lengthInMinutes: int,
         title: str,
         slug: str,
@@ -127,9 +127,9 @@ def create_event_type(
         if value is not None:
             payload[key] = value
 
-        response = requests.request("POST", url, json=payload, headers=headers)
+    response = requests.request("POST", url, json=payload, headers=headers)
 
-        print(response.text)
+    return (response.text)
 
 
 def cal_update_event_type(
@@ -234,5 +234,5 @@ if __name__ == "__main__":
     #print(cal_delete_event_type('2779104'))
     print(cal_get_event_type('2785245'))
     #get_all_event_types()
-    #cal_create_event_type(15, 'wefw','232') #2785245
+    print(cal_create_event_type(15, 'new test event','new-test-event')) #2785245
     pass
