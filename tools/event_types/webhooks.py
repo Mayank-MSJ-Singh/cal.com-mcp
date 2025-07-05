@@ -84,12 +84,22 @@ def cal_get_event_type_webhook(eventTypeId: int, webhookId: str):
     response = requests.request("GET", url_new, headers=headers)
     return (response.text)
 
+def cal_delete_event_type_webhook(eventTypeId: int, webhookId: str):
+
+    url_new = f"{url}/{eventTypeId}/webhooks/{webhookId}"
+
+    response = requests.request("DELETE", url_new, headers=headers)
+    return response.text
+
+
+
 
 if __name__ == "__main__":
     #print(cal_event_types_get_all_webhook('2791412'))
     #print(cal_create_event_type_webhook('2791412','False','https://chat.deepseek.com/a/chat/s/2db066a6-459e-4f1c-aa80-000221997097',"['BOOKING_CREATED']"))
     #print(cal_delete_event_type_webhook('2791412'))
     #print(cal_get_event_type_webhook('2791412','3d769fb6-2b5b-48ad-8018-b044be50beee'))
+    #print(cal_delete_event_type_webhook('2791412','3d769fb6-2b5b-48ad-8018-b044be50beee'))
     pass
 
 
