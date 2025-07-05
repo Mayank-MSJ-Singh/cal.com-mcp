@@ -29,56 +29,132 @@ def cal_delete_team(team_id):
     response = requests.request("DELETE", url_new, headers=headers)
     return (response.text)
 
-def cal_create_a_team(name, slug = None, logoUrl = None, calVideoLogo = None, appLogo = None, appIconLogo = None, bio = None, hideBranding = False, isPrivate = None, hideBookATeamMember = None, metadata = None, theme = None, brandColor = None, darkBrandColor = None, bannerUrl = None, timeFormat = None, timeZone = "Europe/London", weekStart = "Sunday", autoAcceptCreator = True):
+def cal_create_a_team(
+    name: str,
+    slug: str = None,
+    logoUrl: str = None,
+    calVideoLogo: str = None,
+    appLogo: str = None,
+    appIconLogo: str = None,
+    bio: str = None,
+    hideBranding: bool = False,
+    isPrivate: bool = None,
+    hideBookATeamMember: bool = None,
+    metadata: dict = None,
+    theme: str = None,
+    brandColor: str = None,
+    darkBrandColor: str = None,
+    bannerUrl: str = None,
+    timeFormat: int = None,
+    timeZone: str = "Europe/London",
+    weekStart: str = "Sunday",
+    autoAcceptCreator: bool = True
+):
+
+
+    # Initialize payload with required fields and defaults
     payload = {
         "name": name,
         "hideBranding": hideBranding,
         "timeZone": timeZone,
         "weekStart": weekStart,
         "autoAcceptCreator": autoAcceptCreator,
-        "metadata": {}
+        "metadata": metadata or {}  # Use provided metadata or empty dict
     }
 
-    # Add optional parameters to payload if they're not None
-    if slug is not None:
-        payload["slug"] = slug
-    if logoUrl is not None:
-        payload["logoUrl"] = logoUrl
-    if calVideoLogo is not None:
-        payload["calVideoLogo"] = calVideoLogo
-    if appLogo is not None:
-        payload["appLogo"] = appLogo
-    if appIconLogo is not None:
-        payload["appIconLogo"] = appIconLogo
-    if bio is not None:
-        payload["bio"] = bio
-    if isPrivate is not None:
-        payload["isPrivate"] = isPrivate
-    if hideBookATeamMember is not None:
-        payload["hideBookATeamMember"] = hideBookATeamMember
-    if theme is not None:
-        payload["theme"] = theme
-    if brandColor is not None:
-        payload["brandColor"] = brandColor
-    if darkBrandColor is not None:
-        payload["darkBrandColor"] = darkBrandColor
-    if bannerUrl is not None:
-        payload["bannerUrl"] = bannerUrl
-    if timeFormat is not None:
-        payload["timeFormat"] = timeFormat
+    # Optional parameters with conditional addition
+    optional_params = {
+        "slug": slug,
+        "logoUrl": logoUrl,
+        "calVideoLogo": calVideoLogo,
+        "appLogo": appLogo,
+        "appIconLogo": appIconLogo,
+        "bio": bio,
+        "isPrivate": isPrivate,
+        "hideBookATeamMember": hideBookATeamMember,
+        "theme": theme,
+        "brandColor": brandColor,
+        "darkBrandColor": darkBrandColor,
+        "bannerUrl": bannerUrl,
+        "timeFormat": timeFormat
+    }
 
-    # Handle metadata separately (overwrite initial empty dict if provided)
-    if metadata is not None:
-        payload["metadata"] = metadata
+    # Add provided optional parameters to payload
+    for key, value in optional_params.items():
+        if value is not None:
+            payload[key] = value
 
 
     response = requests.request("POST", url, json=payload, headers=headers)
+    return response.text
+
+
+def update_team(
+        teamId: int,
+        name: str = None,
+        slug: str = None,
+        logoUrl: str = None,
+        calVideoLogo: str = None,
+        appLogo: str = None,
+        appIconLogo: str = None,
+        bio: str = None,
+        hideBranding: bool = None,
+        isPrivate: bool = None,
+        hideBookATeamMember: bool = None,
+        metadata: dict = None,
+        theme: str = None,
+        brandColor: str = None,
+        darkBrandColor: str = None,
+        bannerUrl: str = None,
+        timeFormat: int = None,
+        timeZone: str = None,
+        weekStart: str = None,
+        bookingLimits: str = None,
+        includeManagedEventsInLimits: bool = None
+):
+    url_new = url + str(teamId)
+
+    # Start with empty payload
+    payload = {}
+
+    # Map all possible parameters
+    optional_params = {
+        "name": name,
+        "slug": slug,
+        "logoUrl": logoUrl,
+        "calVideoLogo": calVideoLogo,
+        "appLogo": appLogo,
+        "appIconLogo": appIconLogo,
+        "bio": bio,
+        "hideBranding": hideBranding,
+        "isPrivate": isPrivate,
+        "hideBookATeamMember": hideBookATeamMember,
+        "metadata": metadata,
+        "theme": theme,
+        "brandColor": brandColor,
+        "darkBrandColor": darkBrandColor,
+        "bannerUrl": bannerUrl,
+        "timeFormat": timeFormat,
+        "timeZone": timeZone,
+        "weekStart": weekStart,
+        "bookingLimits": bookingLimits,
+        "includeManagedEventsInLimits": includeManagedEventsInLimits
+    }
+
+    # Add only provided parameters to payload
+    for key, value in optional_params.items():
+        if value is not None:
+            payload[key] = value
+
+    response = requests.request("PATCH", url_new, json=payload, headers=headers)
     return response.text
 
 if __name__ == "__main__":
     #print(cal_get_a_team("75458"))
     #cal_delete_team("75458")
     #print(cal_get_a_team("75458"))
+    print(cal_get_teams())
+    '''
     print(cal_create_a_team(
         name="My Test Team 1",
         bio="This is a test team created via API",
@@ -93,5 +169,5 @@ if __name__ == "__main__":
         weekStart="Monday",
         autoAcceptCreator=False
     ))
-
+    '''
     pass
