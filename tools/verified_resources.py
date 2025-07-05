@@ -74,10 +74,23 @@ def cal_get_list_of_verified_phones(take : int = None, skip : int = None):
 
     return (response.text)
 
+def cal_get_verified_emails_by_id(id : int):
+    url_new = f"{url}/emails/{id}"
+    response = requests.request("GET", url_new, headers=headers)
+    return (response.text)
+
+def cal_get_verified_phones_by_id(id : int):
+    url_new = f"{url}/phones/{id}"
+    response = requests.request("GET", url_new, headers=headers)
+    return (response.text)
+
 if __name__ == "__main__":
     #print(cal_request_email_verification_Code("mayanksingh8713491@gmail.com"))
     #print(cal_request_phone_verification_Code("+919318338221"))
     #print(cal_verify_email_verification_Code("mayanksingh8713491@gmail.com", '039528'))
     #print(cal_verify_phone_verification_Code("+919318338221",""))
     #print(cal_get_list_of_verified_phones())
+    #print(cal_get_list_of_verified_emails())
+    #print(cal_get_verified_emails_by_id("3684"))
+
     pass
