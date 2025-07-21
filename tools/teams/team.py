@@ -2,6 +2,7 @@ import requests
 import json
 from dotenv import load_dotenv
 import os
+import ast
 
 
 load_dotenv()
@@ -13,6 +14,23 @@ auth = os.getenv("CAL_COM_API_KEY")
 headers = {
         "Authorization": auth,
     }
+
+def parse(val):
+    try:
+        return json.loads(val)
+    except:
+        try:
+            return ast.literal_eval(val)
+        except:
+            if val == str(val):
+                lowered = val.lower().strip()
+                if lowered == "true":
+                    return True
+                if lowered == "false":
+                    return False
+                if lowered in ("null", "none"):
+                    return None
+    return val
 
 def cal_get_teams():
     response = requests.request("GET", url, headers=headers)
@@ -54,12 +72,12 @@ def cal_create_a_team(
 
     # Initialize payload with required fields and defaults
     payload = {
-        "name": name,
-        "hideBranding": hideBranding,
-        "timeZone": timeZone,
-        "weekStart": weekStart,
-        "autoAcceptCreator": autoAcceptCreator,
-        "metadata": metadata or {}  # Use provided metadata or empty dict
+        "name": parse(name),
+        "hideBranding": parse(hideBranding),
+        "timeZone": parse(timeZone),
+        "weekStart": parse(weekStart),
+        "autoAcceptCreator": parse(autoAcceptCreator),
+        "metadata": parse(metadata) or {}  # Use provided metadata or empty dict
     }
 
     # Optional parameters with conditional addition
@@ -82,7 +100,7 @@ def cal_create_a_team(
     # Add provided optional parameters to payload
     for key, value in optional_params.items():
         if value is not None:
-            payload[key] = value
+            payload[key] = parse(value)
 
 
     response = requests.request("POST", url, json=payload, headers=headers)
@@ -144,7 +162,7 @@ def update_team(
     # Add only provided parameters to payload
     for key, value in optional_params.items():
         if value is not None:
-            payload[key] = value
+            payload[key] = parse(value)
 
     response = requests.request("PATCH", url_new, json=payload, headers=headers)
     return response.text

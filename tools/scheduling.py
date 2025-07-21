@@ -2,6 +2,7 @@ import requests
 import json
 from dotenv import load_dotenv
 import os
+import ast
 
 
 load_dotenv()
@@ -13,7 +14,8 @@ cal_api_version = os.getenv("CAL_API_VERSION")
 
 headers = {
         "Authorization": auth,
-        "cal-api-version": "2024-06-11"
+        "cal-api-version": "2024-06-11",
+        "Content-Type": "application/json"
     }
 
 
@@ -52,23 +54,17 @@ def cal_create_a_schedule(name, timeZone, isDefault, availability=None, override
 
     if availability:
         try:
-            payload["availability"] = json.loads(availability)
+            payload["availability"] = (availability)
         except json.JSONDecodeError:
             print("Invalid JSON in availability")
             return None
 
     if overrides:
         try:
-            payload["overrides"] = json.loads(overrides)
+            payload["overrides"] = (overrides)
         except json.JSONDecodeError:
             print("Invalid JSON in overrides")
             return None
-
-    headers = {
-        "Authorization": auth,
-        "cal-api-version": cal_api_version,
-        "Content-Type": "application/json"
-    }
 
     response = requests.request("POST", url, json=payload, headers=headers)
 
@@ -105,33 +101,27 @@ def cal_update_a_schedule(
     payload = {}
 
     if name is not None:
-        payload["name"] = name
+        payload["name"] = (name)
 
     if timeZone is not None:
-        payload["timeZone"] = timeZone
+        payload["timeZone"] = (timeZone)
 
     if isDefault is not None:
-        payload["isDefault"] = isDefault
+        payload["isDefault"] = (isDefault)
 
     if availability:
         try:
-            payload["availability"] = json.loads(availability)
+            payload["availability"] = (availability)
         except json.JSONDecodeError:
             print("Invalid JSON in availability")
             return None
 
     if overrides:
         try:
-            payload["overrides"] = json.loads(overrides)
+            payload["overrides"] = (overrides)
         except json.JSONDecodeError:
             print("Invalid JSON in overrides")
             return None
-
-    headers = {
-        "Authorization": auth,
-        "cal-api-version": cal_api_version,
-        "Content-Type": "application/json"
-    }
 
     response = requests.request("PATCH", url_new, json=payload, headers=headers)
 

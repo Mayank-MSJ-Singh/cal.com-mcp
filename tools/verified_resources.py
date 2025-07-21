@@ -14,10 +14,11 @@ headers = {
         "Content-Type": "application/json"
     }
 
+
 def cal_request_email_verification_Code(email : str):
 
     url_new = f"{url}/emails/verification-code/request"
-    payload = {"email": email}
+    payload = {"email": (email)}
     response = requests.request("POST", url_new, json=payload, headers=headers)
 
     return (response.text)

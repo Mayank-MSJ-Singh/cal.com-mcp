@@ -14,6 +14,10 @@ headers = {
         "Content-Type": "application/json"
     }
 
+
+
+
+
 def cal_get_me():
     response = requests.request("GET", url, headers=headers)
     return response.text
@@ -55,25 +59,25 @@ def cal_update_my_profile(
 
     # Validate and add parameters
     if email is not None:
-        payload["email"] = email
+        payload["email"] = (email)
     if name is not None:
-        payload["name"] = name
+        payload["name"] = (name)
     if timeFormat is not None:
-        if timeFormat not in (12, 24):
+        if (timeFormat) not in (12, 24):
             raise ValueError("timeFormat must be either 12 or 24")
-        payload["timeFormat"] = timeFormat
+        payload["timeFormat"] = (timeFormat)
     if defaultScheduleId is not None:
-        payload["defaultScheduleId"] = defaultScheduleId
+        payload["defaultScheduleId"] = (defaultScheduleId)
     if weekStart is not None:
-        payload["weekStart"] = weekStart
+        payload["weekStart"] = (weekStart)
     if timeZone is not None:
-        payload["timeZone"] = timeZone
+        payload["timeZone"] = (timeZone)
     if locale is not None:
-        payload["locale"] = locale
+        payload["locale"] = (locale)
     if avatarUrl is not None:
-        payload["avatarUrl"] = avatarUrl
+        payload["avatarUrl"] = (avatarUrl)
     if bio is not None:
-        payload["bio"] = bio
+        payload["bio"] = (bio)
     if metadata is not None:
         # Validate metadata constraints
         if len(metadata) > 50:
@@ -83,7 +87,7 @@ def cal_update_my_profile(
                 raise ValueError(f"Metadata key '{key}' exceeds 40 character limit")
             if isinstance(value, str) and len(value) > 500:
                 raise ValueError(f"Metadata value for '{key}' exceeds 500 character limit")
-        payload["metadata"] = metadata
+        payload["metadata"] = (metadata)
 
     # Check if any parameters were provided
     if not payload:

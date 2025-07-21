@@ -9,26 +9,22 @@ load_dotenv()
 url = "https://api.cal.com/v2/event-types"
 auth = os.getenv("CAL_COM_API_KEY")
 
+
+
 headers = {
         "Authorization": auth,
         "Content-Type": "application/json"
     }
 
-def str_to_bool(value):
-    if isinstance(value, bool):
-        return value
-    if isinstance(value, str):
-        return value.lower() in ("true", "1", "yes")
-    return bool(value)
 
 
 def cal_get_all_event_type_webhook(eventTypeId, take : int = None, skip : int = None):
     url_new = f"{url}/{eventTypeId}/webhooks/"
     querystring = {}
     if take is not None:
-        querystring["take"] = str(take)
+        querystring["take"] = (take)
     if skip is not None:
-        querystring["skip"] = str(skip)
+        querystring["skip"] = (skip)
 
     response = requests.request("GET", url_new, headers=headers, params=querystring)
     return (response.text)
@@ -61,20 +57,20 @@ def cal_create_event_type_webhook(
     # Endpoint URL
     url_new = f"{url}/{eventTypeId}/webhooks/"
 
-    triggers_list = ast.literal_eval(triggers)
+    triggers_list = (triggers)
 
     # Payload with required parameters
     payload = {
-        "active": str_to_bool(active),
-        "subscriberUrl": subscriberUrl,
-        "triggers": triggers_list
+        "active": (active),
+        "subscriberUrl": (subscriberUrl),
+        "triggers": (triggers_list)
     }
 
     # Add optional parameters
     if payloadTemplate is not None:
-        payload["payloadTemplate"] = payloadTemplate
+        payload["payloadTemplate"] = (payloadTemplate)
     if secret is not None:
-        payload["secret"] = secret
+        payload["secret"] = (secret)
 
     response = requests.request("POST", url_new, json=payload, headers=headers)
     return (response.text)
@@ -128,15 +124,15 @@ def cal_update_event_type_webhook(
     # Prepare payload with only provided fields
     payload = {}
     if active is not None:
-        payload["active"] = str_to_bool(active)
+        payload["active"] = (active)
     if subscriberUrl is not None:
-        payload["subscriberUrl"] = subscriberUrl
+        payload["subscriberUrl"] = (subscriberUrl)
     if triggers is not None:
-        payload["triggers"] = ast.literal_eval(triggers) if isinstance(triggers, str) else triggers
+        payload["triggers"] = (triggers)
     if payloadTemplate is not None:
-        payload["payloadTemplate"] = payloadTemplate
+        payload["payloadTemplate"] = (payloadTemplate)
     if secret is not None:
-        payload["secret"] = secret
+        payload["secret"] = (secret)
 
     response = requests.request("PATCH", url_new, json=payload, headers=headers)
     return response.text
@@ -147,7 +143,7 @@ def cal_update_event_type_webhook(
 
 if __name__ == "__main__":
     #print(cal_event_types_get_all_webhook('2791412'))
-    #print(cal_create_event_type_webhook('2791412','False','https://chat.deepseek.com/a/chat/s/2db066a6-459e-4f1c-aa80-000221997097',"['BOOKING_CREATED']"))
+    print(cal_create_event_type_webhook('2791412','False','https://chat.deepseek.com/a/chat/s/2db066a6-459e-4f1c-aa80-000221997097',"['BOOKING_CREATED']"))
     #print(cal_delete_event_type_webhook('2791412'))
     #print(cal_get_event_type_webhook('2791412','3d769fb6-2b5b-48ad-8018-b044be50beee'))
     #print(cal_delete_event_type_webhook('2791412','96516c41-c7e3-451e-89df-1cb0a6d909d7'))
