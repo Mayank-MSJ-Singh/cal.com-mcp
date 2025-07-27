@@ -49,13 +49,12 @@ def cal_create_webhook(
         Response JSON or error details
     """
 
-    triggers_list = (triggers)
 
     # Payload with required parameters
     payload = {
         "active": (active),
         "subscriberUrl": (subscriberUrl),
-        "triggers": triggers_list
+        "triggers": triggers
     }
 
     # Add optional parameters
